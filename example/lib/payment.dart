@@ -1,0 +1,81 @@
+import 'dart:async';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_upi_example/settings.dart';
+import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+
+class Payment extends StatefulWidget {
+  _PaymentState createState() => _PaymentState();
+}
+
+class _PaymentState extends State<Payment> {
+  final flutterWebviewPlugin = new FlutterWebviewPlugin();
+  final orderId = 'TEST_1234567890';
+  final customerId = '1234567890';
+  final amount = '11.0';
+  final email = 'abcde@abcde.com';
+
+  StreamSubscription _onDestroy;
+  StreamSubscription<String> _onUrlChanged;
+  StreamSubscription<WebViewStateChanged> _onStateChanged;
+
+  String status;
+
+  @override
+  void dispose() {
+    _onDestroy.cancel();
+    _onUrlChanged.cancel();
+    _onStateChanged.cancel();
+    flutterWebviewPlugin.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    flutterWebviewPlugin.close();
+
+    _onDestroy = flutterWebviewPlugin.onDestroy.listen((_) {
+      print("destroy");
+    });
+
+    _onStateChanged =
+        flutterWebviewPlugin.onStateChanged.listen((WebViewStateChanged state) {
+      print("onStateChanged: ${state.type} ${state.url}");
+    });
+
+    // Add a listener to on url changed
+    _onUrlChanged = flutterWebviewPlugin.onUrlChanged.listen((String url) {
+      if (mounted) {
+        setState(() {
+          print("URL changed: $url");
+          if (url.contains('callback')) {
+            flutterWebviewPlugin.getCookies().then((cookies) {
+              print("cookies $cookies");
+              print('TXNID $cookies["TXNID"]');
+              print('STATUS $cookies["STATUS"]');
+              print('RESPCODE $cookies["RESPCODE"]');
+              print('RESPMSG $cookies["RESPMSG"]');
+              print('TXNDATE $cookies["TXNDATE"]');
+              // add logic to make show payment status
+              flutterWebviewPlugin.close();
+            });
+          }
+        });
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final queryParams =
+        '?order_id=$orderId&customer_id=$customerId&amount=$amount&email=$email';
+
+    return new WebviewScaffold(
+        url: Settings.apiUrl + queryParams,
+        appBar: new AppBar(
+          title: new Text("Pay using PayTM"),
+        ));
+  }
+}

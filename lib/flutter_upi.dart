@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_upi/flutter_upi.dart';
 
 class FlutterUpiApps {
   static const String PayTM = "net.one97.paytm";
@@ -64,7 +65,8 @@ class FlutterUpi {
       'am': am,
       'cu': cu,
       'url': url
-    });
+    }
+    );
     return response;
   }
 }

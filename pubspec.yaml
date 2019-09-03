@@ -10,6 +10,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  cupertino_icons: ^0.1.2
+  flutter_webview_plugin: ^0.3.1
 
 dev_dependencies:
   flutter_test:
@@ -28,10 +30,26 @@ flutter:
     androidPackage: com.samarth.flutter_upi
     pluginClass: FlutterUpiPlugin
 
+
+
   # To add assets to your plugin package, add an assets section, like this:
-  # assets:
-  #  - images/a_dot_burr.jpeg
-  #  - images/a_dot_ham.jpeg
+  uses-material-design: true
+  assets:
+
+      - assets/i1.PNG
+      - assets/i2.PNG
+      - assets/i3.PNG
+      - assets/i4.PNG
+      - assets/i5.PNG
+      - assets/i6.PNG
+      - assets/i7.PNG
+      - assets/i8.PNG
+      - assets/i9.PNG
+      - assets/i10.PNG
+      - assets/i11.PNG
+      - assets/paytm.jpg
+      - assets/paytm.png
+
   #
   # For details regarding assets in packages, see
   # https://flutter.dev/assets-and-images/#from-packages

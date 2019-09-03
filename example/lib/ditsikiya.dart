@@ -1,21 +1,23 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
+//import 'postmortem.dart';
+import 'dart:async';
 import 'package:flutter_upi/flutter_upi.dart';
-import 'package:flutter_upi_example/payment.dart';
-import 'package:flutter_upi_example/settings.dart';
-//import 'mainsample.dart';
 
 
 
-void main() => runApp(MyApp());
 
-class MyApp extends StatefulWidget {
+class DistokiyaPage extends StatefulWidget {
+  static String tag = 'distokiya-page';
+
   @override
-  _MyAppState createState() => _MyAppState();
+  _DistokiyaPageState createState() => new _DistokiyaPageState();
+
 }
 
-class _MyAppState extends State<MyApp> {
+
+
+
+class _DistokiyaPageState extends State<DistokiyaPage>{
   Future _initiateTransaction;
   GlobalKey<ScaffoldState> _key;
 
@@ -24,6 +26,7 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     _key = GlobalKey<ScaffoldState>();
     //_initiateTransaction = initTransaction();
+
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
@@ -34,7 +37,7 @@ class _MyAppState extends State<MyApp> {
         pn: "Akshay Dhone",
         tr: "TR1234",
         tn: "This is a test transaction",
-        am: "5.01",
+        am: "105.01",
         cu: "INR",
         url: "https://www.google.com");
     print(response);
@@ -47,9 +50,11 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         key: _key,
+
         appBar: AppBar(
-          backgroundColor: Colors.blue[800],
-          title: const Text('Flutter UPI Plugin Demo'),
+          backgroundColor: Colors.purple,
+          title: const Text('Paytm Integration'),
+
 
         ),
         body: Center(
@@ -63,7 +68,9 @@ class _MyAppState extends State<MyApp> {
                   builder: (BuildContext ctx, AsyncSnapshot snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting ||
                         snapshot.data == null) {
-                      return Text("Processing or Yet to start...");
+                      return
+                        Image.asset('assets/paytm.png');
+                    Text("Please select any one of the payment method ",style: TextStyle(fontSize: 20.0, color: Colors.black,fontWeight: FontWeight.bold,), textAlign: TextAlign.center,);
                     } else {
                       switch (snapshot.data.toString()) {
                         case 'app_not_installed':
@@ -81,14 +88,16 @@ class _MyAppState extends State<MyApp> {
                         default:
                           {
                             FlutterUpiResponse flutterUpiResponse =
-                                FlutterUpiResponse(snapshot.data);
+                            FlutterUpiResponse(snapshot.data);
                             print(flutterUpiResponse.txnId);
                             return Column(
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
+
+
                                 Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     Expanded(
                                         flex: 2, child: Text("Transaction ID")),
@@ -99,7 +108,7 @@ class _MyAppState extends State<MyApp> {
                                 ),
                                 Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     Expanded(
                                         flex: 2,
@@ -111,7 +120,7 @@ class _MyAppState extends State<MyApp> {
                                 ),
                                 Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     Expanded(
                                         flex: 2,
@@ -123,7 +132,7 @@ class _MyAppState extends State<MyApp> {
                                 ),
                                 Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     Expanded(
                                       flex: 2,
@@ -139,7 +148,7 @@ class _MyAppState extends State<MyApp> {
                                 ),
                                 Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     Expanded(
                                       flex: 2,
@@ -148,7 +157,7 @@ class _MyAppState extends State<MyApp> {
                                     Expanded(
                                       flex: 3,
                                       child:
-                                          Text(flutterUpiResponse.responseCode),
+                                      Text(flutterUpiResponse.responseCode),
                                     ),
                                   ],
                                 ),
@@ -164,7 +173,7 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
         bottomNavigationBar: BottomAppBar(
-          color: Colors.blue,
+          color: Colors.purple,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -174,6 +183,7 @@ class _MyAppState extends State<MyApp> {
                   "Pay Now with PayTM",
                   style: TextStyle(color: Colors.white),
                 ),
+
                 onPressed: () {
                   _initiateTransaction = initTransaction(FlutterUpiApps.PayTM);
                   setState(() {});
@@ -205,17 +215,10 @@ class _MyAppState extends State<MyApp> {
                   "Pay Now with Google Pay",
                   style: TextStyle(color: Colors.white),
                 ),
-                onPressed: (
-
-                    ) {
+                onPressed: () {
                   _initiateTransaction =
                       initTransaction(FlutterUpiApps.GooglePay);
-                  setState(
-                          (
-
-                      ) {
-
-                  });
+                  setState(() {});
                 },
               ),
             ],
