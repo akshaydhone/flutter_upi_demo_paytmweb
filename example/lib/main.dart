@@ -2,6 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_upi/flutter_upi.dart';
+//import 'mainsample.dart';
+
+
 
 void main() => runApp(MyApp());
 
@@ -25,8 +28,8 @@ class _MyAppState extends State<MyApp> {
   Future<String> initTransaction(String app) async {
     String response = await FlutterUpi.initiateTransaction(
         app: app,
-        pa: "apoorvaagarwal@upi",
-        pn: "Apoorva Agarwal",
+        pa: "9867179947@paytm",
+        pn: "Akshay Dhone",
         tr: "TR1234",
         tn: "This is a test transaction",
         am: "5.01",
@@ -45,6 +48,7 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           backgroundColor: Colors.blue[800],
           title: const Text('Flutter UPI Plugin Demo'),
+
         ),
         body: Center(
           child: Column(
@@ -199,16 +203,24 @@ class _MyAppState extends State<MyApp> {
                   "Pay Now with Google Pay",
                   style: TextStyle(color: Colors.white),
                 ),
-                onPressed: () {
+                onPressed: (
+
+                    ) {
                   _initiateTransaction =
                       initTransaction(FlutterUpiApps.GooglePay);
-                  setState(() {});
+                  setState(
+                          (
+
+                      ) {
+
+                  });
                 },
               ),
             ],
           ),
         ),
       ),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
